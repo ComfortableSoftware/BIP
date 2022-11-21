@@ -1,0 +1,47 @@
+# 00 Introduction to Bulk Image Converter BIC
+
+- Convert parameters.
+  - Alpha compression.
+    - 0=none 1=compress.
+  - Alpha filtering.
+    - 0=none, 1=fast, 2=best.
+  - Alpha quality percent.
+    - 0 … 100
+  - Auto filter.
+    - true or false.
+  - Compression method.
+    - 0 … 6.
+  - Filter sharpness.
+    - ?
+  - Filter strength.
+    - 0 … 100
+  - Filter type.
+    - 0=simple 1=strong.
+  - Image hint.
+    - Photo, picture, graph
+  - Near lossless quality.
+    - 0 … 100
+  - Output format.
+    - JPG/JPEG.
+    - WEBP.
+  - Quality.
+    - 0 … 100
+  - Rename.
+    - My boolean.
+  - Resize parameters.
+    - Exact size to make all images.
+    - Expand and keep ratio.
+    - Expand only,
+    - External app parameters.
+      - realEsrganNcnnVulkan
+      - realEsrgan
+    - Fill and keep ratio.
+    - Fill,
+    - Internal/realEsrganNcnnVulkan/realEsrgan/
+    - Keep-ratio.
+    - Maximum size to keep.
+    - Minimum size to keep.
+    - None,
+    - Shrink and keep ratio.
+    - Shrink only,
+    - Size. (x, y)

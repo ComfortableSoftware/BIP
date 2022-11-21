@@ -1,0 +1,838 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Bulk/Batch Image Converter</title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="00_Intro.html">00 Introduction to Bulk Image Converter BIC</a></li><li class="chapter-item expanded affix "><a href="convert.html">Convert Help</a></li><li class="chapter-item expanded affix "><a href="magick.html">Magick Help</a></li><li class="chapter-item expanded affix "><a href="magickMan.html">Magick Man page (1)</a></li><li class="chapter-item expanded affix "><li class="part-title">In depth</li><li class="chapter-item expanded "><a href="webp.html"><strong aria-hidden="true">1.</strong> Magick WEBP format information</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Bulk/Batch Image Converter</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="00-introduction-to-bulk-image-converter-bic"><a class="header" href="#00-introduction-to-bulk-image-converter-bic">00 Introduction to Bulk Image Converter BIC</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><p>Version: ImageMagick 7.1.0-51 Q16-HDRI x86_64 20499 https://imagemagick.org
+Copyright: (C) 1999 ImageMagick Studio LLC
+License: https://imagemagick.org/script/license.php
+Features: Cipher DPC HDRI Modules OpenCL OpenMP(4.5) 
+Delegates (built-in): bzlib cairo djvu fontconfig freetype heic jbig jng jp2 jpeg jxl lcms lqr ltdl lzma openexr pangocairo png raqm raw rsvg tiff webp wmf x xml zip zlib
+Compiler: gcc (12.2)
+Usage: convert [options ...] file [ [options ...] file ...] [options ...] file</p>
+<p>Image Settings:
+-adjoin              join images into a single multi-image file
+-affine matrix       affine transform matrix
+-alpha option        activate, deactivate, reset, or set the alpha channel
+-antialias           remove pixel-aliasing
+-authenticate password
+decipher image with this password
+-attenuate value     lessen (or intensify) when adding noise to an image
+-background color    background color
+-bias value          add bias when convolving an image
+-black-point-compensation
+use black point compensation
+-blue-primary point  chromaticity blue primary point
+-bordercolor color   border color
+-caption string      assign a caption to an image
+-clip                clip along the first path from the 8BIM profile
+-clip-mask filename  associate a clip mask with the image
+-clip-path id        clip along a named path from the 8BIM profile
+-colorspace type     alternate image colorspace
+-comment string      annotate image with comment
+-compose operator    set image composite operator
+-compress type       type of pixel compression when writing the image
+-define format:option
+define one or more image format options
+-delay value         display the next image after pausing
+-density geometry    horizontal and vertical density of the image
+-depth value         image depth
+-direction type      render text right-to-left or left-to-right
+-display server      get image or font from this X server
+-dispose method      layer disposal method
+-dither method       apply error diffusion to image
+-encoding type       text encoding type
+-endian type         endianness (MSB or LSB) of the image
+-family name         render text with this font family
+-features distance   analyze image features (e.g. contrast, correlation)
+-fill color          color to use when filling a graphic primitive
+-filter type         use this filter when resizing an image
+-font name           render text with this font
+-format &quot;string&quot;     output formatted image characteristics
+-fuzz distance       colors within this distance are considered equal
+-gravity type        horizontal and vertical text placement
+-green-primary point chromaticity green primary point
+-illuminant type     reference illuminant
+-intensity method    method to generate an intensity value from a pixel
+-intent type         type of rendering intent when managing the image color
+-interlace type      type of image interlacing scheme
+-interline-spacing value
+set the space between two text lines
+-interpolate method  pixel color interpolation method
+-interword-spacing value
+set the space between two words
+-kerning value       set the space between two letters
+-label string        assign a label to an image
+-limit type value    pixel cache resource limit
+-loop iterations     add Netscape loop extension to your GIF animation
+-matte               store matte channel if the image has one
+-mattecolor color    frame color
+-moments             report image moments
+-monitor             monitor progress
+-orient type         image orientation
+-page geometry       size and location of an image canvas (setting)
+-ping                efficiently determine image attributes
+-pointsize value     font point size
+-precision value     maximum number of significant digits to print
+-preview type        image preview type
+-quality value       JPEG/MIFF/PNG compression level
+-quiet               suppress all warning messages
+-read-mask filename  associate a read mask with the image
+-red-primary point   chromaticity red primary point
+-regard-warnings     pay attention to warning messages
+-remap filename      transform image colors to match this set of colors
+-repage geometry     size and location of an image canvas
+-respect-parentheses settings remain in effect until parenthesis boundary
+-sampling-factor geometry
+horizontal and vertical sampling factor
+-scene value         image scene number
+-seed value          seed a new sequence of pseudo-random numbers
+-size geometry       width and height of image
+-stretch type        render text with this font stretch
+-stroke color        graphic primitive stroke color
+-strokewidth value   graphic primitive stroke width
+-style type          render text with this font style
+-support factor      resize support: &gt; 1.0 is blurry, &lt; 1.0 is sharp
+-synchronize         synchronize image to storage device
+-taint               declare the image as modified
+-texture filename    name of texture to tile onto the image background
+-tile-offset geometry
+tile offset
+-treedepth value     color tree depth
+-transparent-color color
+transparent color
+-undercolor color    annotation bounding box color
+-units type          the units of image resolution
+-verbose             print detailed information about the image
+-view                FlashPix viewing transforms
+-virtual-pixel method
+virtual pixel access method
+-weight type         render text with this font weight
+-white-point point   chromaticity white point
+-write-mask filename associate a write mask with the image  -word-break type     sets whether line breaks appear wherever the text would otherwise overflow</p>
+<p>Image Operators:
+-adaptive-blur geometry
+adaptively blur pixels; decrease effect near edges
+-adaptive-resize geometry
+adaptively resize image using 'mesh' interpolation
+-adaptive-sharpen geometry
+adaptively sharpen pixels; increase effect near edges
+-alpha option        on, activate, off, deactivate, set, opaque, copy
+transparent, extract, background, or shape
+-annotate geometry text
+annotate the image with text
+-auto-gamma          automagically adjust gamma level of image
+-auto-level          automagically adjust color levels of image
+-auto-orient         automagically orient (rotate) image
+-auto-threshold method
+automatically perform image thresholding
+-bench iterations    measure performance
+-bilateral-blur geometry
+non-linear, edge-preserving, and noise-reducing smoothing filter
+-black-threshold value
+force all pixels below the threshold into black
+-blue-shift factor   simulate a scene at nighttime in the moonlight
+-blur geometry       reduce image noise and reduce detail levels
+-border geometry     surround image with a border of color
+-bordercolor color   border color
+-brightness-contrast geometry
+improve brightness / contrast of the image
+-canny geometry      detect edges in the image
+-cdl filename        color correct with a color decision list
+-channel mask        set the image channel mask
+-charcoal radius     simulate a charcoal drawing
+-chop geometry       remove pixels from the image interior
+-clahe geometry      contrast limited adaptive histogram equalization
+-clamp               keep pixel values in range (0-QuantumRange)
+-colorize value      colorize the image with the fill color
+-color-matrix matrix apply color correction to the image
+-colors value        preferred number of colors in the image
+-connected-components connectivity
+connected-components uniquely labeled
+-contrast            enhance or reduce the image contrast
+-contrast-stretch geometry
+improve contrast by 'stretching' the intensity range
+-convolve coefficients
+apply a convolution kernel to the image
+-cycle amount        cycle the image colormap
+-decipher filename   convert cipher pixels to plain pixels
+-deskew threshold    straighten an image
+-despeckle           reduce the speckles within an image
+-distort method args
+distort images according to given method and args
+-draw string         annotate the image with a graphic primitive
+-edge radius         apply a filter to detect edges in the image
+-encipher filename   convert plain pixels to cipher pixels
+-emboss radius       emboss an image
+-enhance             apply a digital filter to enhance a noisy image
+-equalize            perform histogram equalization to an image
+-evaluate operator value
+evaluate an arithmetic, relational, or logical expression
+-extent geometry     set the image size
+-extract geometry    extract area from image
+-fft                 implements the discrete Fourier transform (DFT)
+-flip                flip image vertically
+-floodfill geometry color
+floodfill the image with color
+-flop                flop image horizontally
+-frame geometry      surround image with an ornamental border
+-function name parameters
+apply function over image values
+-gamma value         level of gamma correction
+-gaussian-blur geometry
+reduce image noise and reduce detail levels
+-geometry geometry   preferred size or location of the image
+-grayscale method    convert image to grayscale
+-hough-lines geometry
+identify lines in the image
+-identify            identify the format and characteristics of the image
+-ift                 implements the inverse discrete Fourier transform (DFT)
+-implode amount      implode image pixels about the center
+-integral            calculate the sum of values (pixel values) in the image
+-interpolative-resize geometry
+resize image using interpolation
+-kmeans geometry     K means color reduction
+-kuwahara geometry   edge preserving noise reduction filter
+-lat geometry        local adaptive thresholding
+-level value         adjust the level of image contrast
+-level-colors color,color
+level image with the given colors
+-linear-stretch geometry
+improve contrast by 'stretching with saturation'
+-liquid-rescale geometry
+rescale image with seam-carving
+-local-contrast geometry
+enhance local contrast
+-mean-shift geometry delineate arbitrarily shaped clusters in the image
+-median geometry     apply a median filter to the image
+-mode geometry       make each pixel the 'predominant color' of the
+neighborhood
+-modulate value      vary the brightness, saturation, and hue
+-monochrome          transform image to black and white
+-morphology method kernel
+apply a morphology method to the image
+-motion-blur geometry
+simulate motion blur
+-negate              replace every pixel with its complementary color 
+-noise geometry      add or reduce noise in an image
+-normalize           transform image to span the full range of colors
+-opaque color        change this color to the fill color
+-ordered-dither NxN
+add a noise pattern to the image with specific
+amplitudes
+-paint radius        simulate an oil painting
+-perceptible epsilon
+pixel value less than |epsilon| become epsilon or
+-epsilon
+-polaroid angle      simulate a Polaroid picture
+-posterize levels    reduce the image to a limited number of color levels
+-profile filename    add, delete, or apply an image profile
+-quantize colorspace reduce colors in this colorspace
+-raise value         lighten/darken image edges to create a 3-D effect
+-random-threshold low,high
+random threshold the image
+-range-threshold values
+perform either hard or soft thresholding within some range of values in an image
+-region geometry     apply options to a portion of the image
+-render              render vector graphics
+-resample geometry   change the resolution of an image
+-resize geometry     resize the image
+-roll geometry       roll an image vertically or horizontally
+-rotate degrees      apply Paeth rotation to the image
+-rotational-blur angle
+rotational blur the image
+-sample geometry     scale image with pixel sampling
+-scale geometry      scale the image
+-segment values      segment an image
+-selective-blur geometry
+selectively blur pixels within a contrast threshold
+-sepia-tone threshold
+simulate a sepia-toned photo
+-set property value  set an image property
+-shade degrees       shade the image using a distant light source
+-shadow geometry     simulate an image shadow
+-sharpen geometry    sharpen the image
+-shave geometry      shave pixels from the image edges
+-shear geometry      slide one edge of the image along the X or Y axis
+-sigmoidal-contrast geometry
+increase the contrast without saturating highlights or
+shadows
+-sketch geometry     simulate a pencil sketch
+-solarize threshold  negate all pixels above the threshold level
+-sort-pixels         sort each scanline in ascending order of intensity
+-sparse-color method args
+fill in a image based on a few color points
+-splice geometry     splice the background color into the image
+-spread radius       displace image pixels by a random amount
+-statistic type geometry
+replace each pixel with corresponding statistic from the
+neighborhood
+-strip               strip image of all profiles and comments
+-swirl degrees       swirl image pixels about the center
+-threshold value     threshold the image
+-thumbnail geometry  create a thumbnail of the image
+-tile filename       tile image when filling a graphic primitive
+-tint value          tint the image with the fill color
+-transform           affine transform image
+-transparent color   make this color transparent within the image
+-transpose           flip image vertically and rotate 90 degrees
+-transverse          flop image horizontally and rotate 270 degrees
+-trim                trim image edges
+-type type           image type
+-unique-colors       discard all but one of any pixel color
+-unsharp geometry    sharpen the image
+-vignette geometry   soften the edges of the image in vignette style
+-wave geometry       alter an image along a sine wave
+-wavelet-denoise threshold
+removes noise from the image using a wavelet transform
+-white-balance       automagically adjust white balance of image
+-white-threshold value
+force all pixels above the threshold into white</p>
+<p>Image Channel Operators:
+-channel-fx expression
+exchange, extract, or transfer one or more image channels
+-separate            separate an image channel into a grayscale image</p>
+<p>Image Sequence Operators:
+-append              append an image sequence
+-clut                apply a color lookup table to the image
+-coalesce            merge a sequence of images
+-combine             combine a sequence of images
+-compare             mathematically and visually annotate the difference between an image and its reconstruction
+-complex operator    perform complex mathematics on an image sequence
+-composite           composite image
+-copy geometry offset
+copy pixels from one area of an image to another
+-crop geometry       cut out a rectangular region of the image
+-deconstruct         break down an image sequence into constituent parts
+-evaluate-sequence operator
+evaluate an arithmetic, relational, or logical expression
+-flatten             flatten a sequence of images
+-fx expression       apply mathematical expression to an image channel(s)
+-hald-clut           apply a Hald color lookup table to the image
+-layers method       optimize, merge, or compare image layers
+-morph value         morph an image sequence
+-mosaic              create a mosaic from an image sequence
+-poly terms          build a polynomial from the image sequence and the corresponding
+terms (coefficients and degree pairs).
+-print string        interpret string and print to console
+-process arguments   process the image with a custom image filter
+-smush geometry      smush an image sequence together
+-write filename      write images to this file</p>
+<p>Image Stack Operators:
+-clone indexes       clone an image
+-delete indexes      delete the image from the image sequence
+-duplicate count,indexes
+duplicate an image one or more times
+-insert index        insert last image into the image sequence
+-reverse             reverse image sequence
+-swap indexes        swap two images in the image sequence</p>
+<p>Miscellaneous Options:
+-debug events        display copious debugging information
+-distribute-cache port
+distributed pixel cache spanning one or more servers
+-help                print program options
+-list type           print a list of supported option arguments
+-log format          format of debugging information
+-version             print version information</p>
+<p>By default, the image format of 'file' is determined by its magic
+number.  To specify a particular image format, precede the filename
+with an image format name and a colon (i.e. ps:image) or specify the
+image type as the filename suffix (i.e. image.ps).  Specify 'file' as
+'-' for standard input or output.</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><pre><code>magick(1)                                                                                               General Commands Manual                                                                                              magick(1)
+
+NAME
+       magick - convert between image formats as well as resize an image, blur, crop, despeckle, dither, draw on, flip, join, re-sample, and much more.
+
+SYNOPSIS
+       magick [input-options] input-file [output-options] output-file
+
+OVERVIEW
+       The magick program is a member of the ImageMagick(1) suite of tools.  Use it to convert between image formats as well as resize an image, blur, crop, despeckle, dither, draw on, flip, join, re-sample, and much more.
+
+       For more information about the magick command, point your browser to file:///usr/share/doc/ImageMagick-7/www/magick.html or http://imagemagick.org/script/magick.php.
+
+DESCRIPTION
+       Image Settings:
+         -adjoin              join images into a single multi-image file
+         -affine matrix       affine transform matrix
+         -antialias           remove pixel-aliasing
+         -authenticate value  decrypt image with this password
+         -background color    background color
+         -bias value          add bias when convolving an image
+         -black-point-compensation
+                              use black point compensation
+         -blue-primary point  chromaticity blue primary point
+         -bordercolor color   border color
+         -caption string      assign a caption to an image
+         -cdl filename        color correct with a color decision list
+         -colors value        preferred number of colors in the image
+         -colorspace type     alternate image colorspace
+         -comment string      annotate image with comment
+         -compose operator    set image composite operator
+         -compress type       type of pixel compression when writing the image
+         -decipher filename   magick cipher pixels to plain pixels
+         -define format:option
+                              define one or more image format options
+         -delay centiseconds  display the next image after pausing
+         -density geometry    horizontal and vertical density of the image
+         -depth value         image depth
+         -direction type      render text right-to-left or left-to-right
+         -display server      get image or font from this X server
+         -dispose method      layer disposal method
+         -dither method       apply error diffusion to image
+         -encipher filename   magick plain pixels to cipher pixels
+         -encoding type       text encoding type
+         -endian type         endianness (MSB or LSB) of the image
+         -family name         render text with this font family
+         -fill color          color to use when filling a graphic primitive
+         -filter type         use this filter when resizing an image
+         -flatten             flatten a sequence of images
+         -font name           render text with this font
+         -format &quot;string&quot;     output formatted image characteristics
+         -fuzz distance       colors within this distance are considered equal
+         -gravity type        horizontal and vertical text placement
+         -green-primary point chromaticity green primary point
+         -intent type         type of rendering intent when managing the image color
+         -interlace type      type of image interlacing scheme
+         -interpolate method  pixel color interpolation method
+         -kerning value       set the space between two letters
+         -label string        assign a label to an image
+         -limit type value    pixel cache resource limit
+         -loop iterations     add Netscape loop extension to your GIF animation
+         -mask filename       associate a mask with the image
+         -matte               store matte channel if the image has one
+         -mattecolor color    frame color
+         -monitor             monitor progress
+         -orient type         image orientation
+         -origin geometry     image origin
+         -page geometry       size and location of an image canvas (setting)
+         -ping                efficiently determine image attributes
+         -pointsize value     font point size
+         -preview type        image preview type
+         -quality value       JPEG/MIFF/PNG compression level
+         -quiet               suppress all warning messages
+         -red-primary point   chromaticity red primary point
+         -regard-warnings     pay attention to warning messages
+         -repage geometry     size and location of an image canvas
+         -sampling-factor geometry
+                              horizontal and vertical sampling factor
+         -scene value         image scene number
+         -seed value          seed a new sequence of pseudo-random numbers
+         -size geometry       width and height of image
+         -statistic type geometry
+                              replace each pixel with corresponding statistic from the neighborhood
+         -stretch type        render text with this font stretch
+         -stroke color        graphic primitive stroke color
+         -strokewidth value   graphic primitive stroke width
+         -style type          render text with this font style
+         -support factor      resize support: &gt; 1.0 is blurry, &lt; 1.0 is sharp
+         -synchronize         synchronize image to storage device
+         -taint               declare the image as modified
+         -texture filename    name of texture to tile onto the image background
+         -tile-offset geometry
+                              tile offset
+         -treedepth value     color tree depth
+         -transparent-color color
+                              transparent color
+         -undercolor color    annotation bounding box color
+         -units type          the units of image resolution
+         -verbose             print detailed information about the image
+         -view                FlashPix viewing transforms
+         -virtual-pixel method
+                              virtual pixel access method
+         -weight type         render text with this font weight
+         -white-point point   chromaticity white point
+
+       Image Operators:
+         -adaptive-blur geometry
+                              adaptively blur pixels; decrease effect near edges
+         -adaptive-resize geometry
+                              adaptively resize image with data dependent triangulation
+         -adaptive-sharpen geometry
+                              adaptively sharpen pixels; increase effect near edges
+         -annotate geometry text
+                              annotate the image with text
+         -auto-orient         automatically orient image
+         -bilateral-blur geometry
+                               non-linear, edge-preserving, and noise-reducing smoothing filter
+         -black-threshold value
+                              force all pixels below the threshold into black
+         -blur geometry       reduce image noise and reduce detail levels
+         -border geometry     surround image with a border of color
+         -channel mask        set the image channel mask
+         -charcoal radius     simulate a charcoal drawing
+         -chop geometry       remove pixels from the image interior
+         -clip                clip along the first path from the 8BIM profile
+         -clip-mask filename  associate a clip mask with the image
+         -clip-path id        clip along a named path from the 8BIM profile
+         -colorize value      colorize the image with the fill color
+         -color-matrix matrix apply color correction to the image
+         -contrast            enhance or reduce the image contrast
+         -contrast-stretch geometry
+                              improve contrast by `stretching' the intensity range
+         -convolve coefficients
+                              apply a convolution kernel to the image
+         -cycle amount        cycle the image colormap
+         -despeckle           reduce the speckles within an image
+         -draw string         annotate the image with a graphic primitive
+         -edge radius         apply a filter to detect edges in the image
+         -emboss radius       emboss an image
+         -enhance             apply a digital filter to enhance a noisy image
+         -equalize            perform histogram equalization to an image
+         -evaluate operator value
+                              evaluate an arithmetic, relational, or logical expression
+         -extent geometry     set the image size
+         -extract geometry    extract area from image
+         -fft                 implements the discrete Fourier transform (DFT)
+         -flip                flip image vertically
+         -floodfill geometry color
+                              floodfill the image with color
+         -flop                flop image horizontally
+         -frame geometry      surround image with an ornamental border
+         -function name       apply a function to the image
+         -gamma value         level of gamma correction
+         -gaussian-blur geometry
+                              reduce image noise and reduce detail levels
+         -geometry geometry   preferred size or location of the image
+         -identify            identify the format and characteristics of the image
+         -ift                 implements the inverse discrete Fourier transform (DFT)
+         -implode amount      implode image pixels about the center
+         -integral            calculate the sum of values (pixel values) in the image
+         -lat geometry        local adaptive thresholding
+         -layers method       optimize or compare image layers
+         -level value         adjust the level of image contrast
+         -linear-stretch geometry
+                              improve contrast by `stretching with saturation' the intensity range
+         -median geometry     apply a median filter to the image
+         -mode geometry       make each pixel the 'predominant color' of the neighborhood
+         -modulate value      vary the brightness, saturation, and hue
+         -monochrome          transform image to black and white
+         -morphology method kernel
+                              apply a morphology method to the image
+         -motion-blur geometry
+                              simulate motion blur
+         -negate              replace each pixel with its complementary color
+         -noise geometry      add or reduce noise in an image
+         -normalize           transform image to span the full range of colors
+         -opaque color        change this color to the fill color
+         -ordered-dither NxN
+                              add a noise pattern to the image with specific amplitudes
+         -paint radius        simulate an oil painting
+         -polaroid angle      simulate a Polaroid picture
+         -posterize levels    reduce the image to a limited number of color levels
+         -print string        interpret string and print to console
+         -profile filename    add, delete, or apply an image profile
+         -quantize colorspace reduce colors in this colorspace
+         -radial-blur angle   radial blur the image
+         -raise value         lighten/darken image edges to create a 3-D effect
+         -random-threshold low,high
+                              random threshold the image
+         -range-threshold values
+                              perform either hard or soft thresholding within some range of values in an image
+         -region geometry     apply options to a portion of the image
+         -render              render vector graphics
+         -resample geometry   change the resolution of an image
+         -resize geometry     resize the image
+         -roll geometry       roll an image vertically or horizontally
+         -rotate degrees      apply Paeth rotation to the image
+         -sample geometry     scale image with pixel sampling
+         -scale geometry      scale the image
+         -segment values      segment an image
+         -selective-blur geometry
+                              selectively blur pixels within a contrast threshold
+         -sepia-tone threshold
+                              simulate a sepia-toned photo
+         -set property value  set an image property
+         -shade degrees       shade the image using a distant light source
+         -shadow geometry     simulate an image shadow
+         -sharpen geometry    sharpen the image
+         -shave geometry      shave pixels from the image edges
+         -shear geometry      slide one edge of the image along the X or Y axis
+         -sigmoidal-contrast geometry
+                              lightness rescaling using sigmoidal contrast enhancement
+         -sketch geometry     simulate a pencil sketch
+         -solarize threshold  negate all pixels above the threshold level
+         -sort-pixels         sort each scanline in ascending order of intensity
+         -splice geometry     splice the background color into the image
+         -spread amount       displace image pixels by a random amount
+         -strip               strip image of all profiles and comments
+         -swirl degrees       swirl image pixels about the center
+         -threshold value     threshold the image
+         -thumbnail geometry  create a thumbnail of the image
+         -tile filename       tile image when filling a graphic primitive
+         -tint value          tint the image with the fill color
+         -transform           affine transform image
+         -transparent color   make this color transparent within the image
+         -transpose           flip image vertically and rotate 90 degrees
+         -transverse          flop image horizontally and rotate 270 degrees
+         -trim                trim image edges
+         -type type           image type
+         -unique-colors       discard all but one of any pixel color
+         -unsharp geometry    sharpen the image
+         -vignette geometry   soften the edges of the image in vignette style
+         -wave geometry       alter an image along a sine wave
+         -white-threshold value
+                              force all pixels above the threshold into white
+
+       Image Channel Operators:
+         -channel-extract channel-list
+                               extract the channels in order
+         -channel-inject channel-list
+                               inject the channels in order
+         -channel-swap channel,channel
+                               swap the channels
+
+       Image Sequence Operators:
+         -affinity filename   transform image colors to match this set of colors
+         -append              append an image sequence top to bottom (use +append for left to right)
+         -clut                apply a color lookup table to the image
+         -coalesce            merge a sequence of images
+         -combine             combine a sequence of images
+         -composite           composite image
+         -crop geometry       cut out a rectangular region of the image
+         -deconstruct         break down an image sequence into constituent parts
+         -evaluate-sequence operator
+                              evaluate an arithmetic, relational, or logical expression
+         -flatten             flatten a sequence of images
+         -fx expression       apply mathematical expression to an image channel(s)
+         -hald-clut           apply a Hald color lookup table to the image
+         -morph value         morph an image sequence
+         -mosaic              create a mosaic from an image sequence
+         -process arguments   process the image with a custom image filter
+         -separate            separate an image channel into a grayscale image
+         -smush geometry      smush an image sequence together
+         -write filename      write images to this file
+
+       Image Stack Operators:
+         -clone indexes       clone an image
+         -delete indexes      delete the image from the image sequence
+         -duplicate count,indexes
+                              duplicate an image one or more times
+         -insert index        insert last image into the image sequence
+         -swap indexes        swap two images in the image sequence
+
+       Miscellaneous Options:
+         -debug events        display copious debugging information
+         -help                print program options
+         -log format          format of debugging information
+         -list type           print a list of supported option arguments
+         -version             print version information
+
+       Use  any  setting or operator as an output-option.  Only a limited number of setting are  input-option. They include: -antialias, -caption, -density, -define, -encoding, -font, -pointsize, -size, and -texture as well as any
+       of the miscellaneous options.
+
+       By default, the image format of `file' is determined by its magic number.  To specify a particular image format, precede the filename with an image format name and a colon (i.e. ps:image) or specify the image  type  as  the
+       filename suffix (i.e. image.ps).  Specify 'file' as '-' for standard input or output.
+
+SEE ALSO
+       ImageMagick(1)
+
+COPYRIGHT
+       Copyright (C) 1999-2021 ImageMagick Studio LLC. Additional copyrights and licenses apply to this software, see file:///usr/share/doc/ImageMagick-7/www/license.html or http://imagemagick.org/script/license.php
+
+ImageMagick                                                                                            Date: 2009/01/10 01:00:00                                                                                             magick(1)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><pre><code>ImageMagick's WebP image format accepts a plethora of encoding options as detailed below. As an example, suppose you are interested in these options:
+
+    quality of 50
+    lossless compression
+
+Use this command:
+
+magick wizard.png -quality 50 -define webp:lossless=true wizard.webp
+
+Here is a complete list of WebP encoding options:
+Option 	Description
+alpha-compression=value 	encode the alpha plane: 0 = none, 1 = compressed.
+alpha-filtering=value 	predictive filtering method for alpha plane: 0=none, 1=fast, 2=best.
+alpha-quality=value 	the compression value for alpha compression between 0 and 100. Lossless compression of alpha is achieved using a value of 100, while the lower values result in a lossy compression. The default is 100.
+exact=true, false 	preserve RGB values in transparent area. It's disabled by default to help compressibility.
+auto-filter=true, false 	when enabled, the algorithm spends additional time optimizing the filtering strength to reach a well-balanced quality.
+emulate-jpeg-size=true, false 	return a similar compression to that of JPEG but with less degradation.
+filter-sharpness=value 	filter sharpness.
+filter-strength=value 	the strength of the deblocking filter, between 0 (no filtering) and 100 (maximum filtering). A value of 0 turns off any filtering. Higher values increase the strength of the filtering process applied after decoding the image. The higher the value, the smoother the image appears. Typical values are usually in the range of 20 to 50.
+filter-type=value 	filter type: 0 = simple, 1 = strong
+image-hint=default, photo, picture, graph 	the hint about the image type.
+lossless=true, false 	encode the image without any loss.
+low-memory=true, false 	reduce memory usage.
+method=value 	the compression method to use. It controls the trade off between encoding speed and the compressed file size and quality. Possible values range from 0 to 6. Default value is 4. When higher values are utilized, the encoder spends more time inspecting additional encoding possibilities and decide on the quality gain. Lower value might result in faster processing time at the expense of larger file size and lower compression quality.
+near-lossless=value 	the near lossless encoding, between 0 (max-loss) and 100 (off).
+preprocessing=value 	Choose from: 0=none, 1=segment-smooth, 2=pseudo-random dithering.
+partitions=value 	progressive decoding: choose 0 to 3.
+partition-limit=value 	Choose 0 for no quality degradation and 100 for maximum degradation.
+pass=value 	maximum number of passes to target compression size or PSNR.
+segment=value 	Choose from 1 to 4, the maximum number of segments to use.
+show-compressed=true, false
+sns-strength=value 	the amplitude of the spatial noise shaping. Spatial noise shaping (SNS) refers to a general collection of built-in algorithms used to decide which area of the picture should use relatively less bits, and where else to better transfer these bits. The possible range goes from 0 (algorithm is off) to 100 (the maximal effect). The default value is 80.
+target-size=value 	a target size (in bytes) to try and reach for the compressed output. The compressor makes several passes of partial encoding in order to get as close as possible to this target.
+target-psnr=value 	desired minimal distortion.
+thread-level=value 	enable multi-threaded encoding: 0 = disabled, 1 = enabled.
+use-sharp-yuv=value 	if needed, use sharp (and slow) RGB-&gt;YUV conversion.
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>
